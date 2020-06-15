@@ -152,7 +152,7 @@ router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
   }
 });
 
-router.get("/facebook", passport.authenticate("facebook", { scope: "email" }));
+router.get("/facebook", passport.authenticate("facebook"));
 
 router.get(
   "http://localhost:3001/",
