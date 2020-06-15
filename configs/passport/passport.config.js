@@ -1,10 +1,13 @@
 const passport = require("passport");
 
-require("./local-strategy.config");
-require("./facebook-strategy.config");
-require("./serializers.config");
+const localStrategy = require("./local-strategy.config");
+const facebook = require("./facebook-strategy.config");
+const serializers = require("./serializers.config");
 
 module.exports = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
+  serializers();
+  facebook();
+  localStrategy();
 };
