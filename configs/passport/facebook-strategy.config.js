@@ -13,7 +13,7 @@ module.exports = facebook = () => {
         callbackURL: "http://localhost:3001/",
         profileFields: ["id", "emails", "displayName", "photos"],
       },
-      async (accessToken, refreshToken, profile, done) => {
+      (accessToken, refreshToken, profile, done) => {
         console.log("Test");
         console.log(profile._json);
         done(null, profile);
