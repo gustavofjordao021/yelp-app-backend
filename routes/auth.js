@@ -152,14 +152,20 @@ router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
   }
 });
 
-router.get("/facebook", passport.authenticate("facebook"));
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["provider", "emails", "name"] })
+);
 
 router.get(
-  "http://localhost:3001/",
+  "/success/facebook",
   passport.authenticate("facebook", {
-    successRedirect: "/",
     failureRedirect: "/login",
-  })
+  }),
+  (req, res, next) => {
+    res.redirect("/");
+    res.json("Your Facebook auth worked! :)");
+  }
 );
 
 module.exports = router;
