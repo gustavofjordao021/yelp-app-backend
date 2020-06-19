@@ -154,7 +154,7 @@ router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
 
 router.get(
   "/facebook",
-  passport.authenticate("facebook", { scope: ["provider", "emails", "name"] })
+  passport.authenticate("facebook", { scope: "profile" })
 );
 
 router.get(
@@ -165,6 +165,19 @@ router.get(
   (req, res, next) => {
     res.redirect("/");
     res.json("Your Facebook auth worked! :)");
+  }
+);
+
+router.get("/google", passport.authenticate("google", { scope: "profile" }));
+
+router.get(
+  "/success/google",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+  }),
+  function (req, res) {
+    res.redirect("/");
+    res.json("Your Google auth worked! :)");
   }
 );
 

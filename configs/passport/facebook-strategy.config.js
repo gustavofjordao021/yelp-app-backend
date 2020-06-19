@@ -11,8 +11,6 @@ passport.use(
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: "http://localhost:3001/auth/facebook/callback",
       profileFields: ["id", "emails", "displayName", "photos"],
-      passReqToCallback: true,
-      enableProof: true,
     },
     (req, accessToken, refreshToken, profile) => {
       console.log("Test");
