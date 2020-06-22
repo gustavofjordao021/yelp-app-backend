@@ -8,8 +8,6 @@ const uploadCloud = require("../configs/cloudinary-setup");
 const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
 
-const routeGuard = require("../configs/route-guard.config");
-
 router.post("/signup", (req, res, next) => {
   const { username, email, password, avatar } = req.body;
   console.log("Body: ", req.body);
@@ -168,7 +166,15 @@ router.get(
   }
 );
 
-router.get("/google", passport.authenticate("google", { scope: "profile" }));
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ],
+  })
+);
 
 router.get(
   "/success/google",
