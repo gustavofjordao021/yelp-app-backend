@@ -12,11 +12,8 @@ passport.use(
       callbackURL: "http://localhost:3001/auth/facebook/callback",
       profileFields: ["id", "emails", "displayName", "photos"],
     },
-    (req, accessToken, refreshToken, profile) => {
+    (accessToken, refreshToken, profile, done) => {
       console.log("Test");
-      console.log(req);
-      console.log(accessToken);
-      console.log(refreshToken);
       console.log(profile);
     }
   )
