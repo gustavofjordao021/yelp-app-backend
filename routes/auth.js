@@ -179,7 +179,9 @@ router.get(
 router.get(
   "/success/google",
   passport.authenticate("google", {
-    failureRedirect: "/login",
+    successRedirect: "/app",
+    failureRedirect: "/auth/login",
+    failureFlash: "Invalid Google credentials.",
   }),
   function (req, res) {
     res.redirect("/");

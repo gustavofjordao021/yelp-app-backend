@@ -2,6 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
+    provider: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       trim: true,
@@ -24,10 +28,10 @@ const userSchema = new Schema(
       default:
         "https://cl.goliath.com/image/upload/t_tn,f_auto,q_auto,$h_480,$w_895/go/2020/01/baby-yoda-life-size-figure-584x600-895x480.jpg",
     },
-    goals: [
+    plants: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Goal",
+        ref: "Plants",
       },
     ],
   },
