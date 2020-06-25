@@ -8,27 +8,24 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/",
+      callbackURL: "http://localhost:3001/auth/success/google",
     },
     async function (accessToken, refreshToken, profile, done) {
-      console.log("Profile ===> ", profile);
       const { provider, given_name, email, picture } = profile;
       if (!picture) {
-        const user = User.create({
+        const user = await User.create({
           provider,
           username: given_name,
           email,
         });
-        console.log("User created ===> ", user);
         await done(null, user);
       } else {
-        const user = User.create({
+        const user = await User.create({
           provider,
           username: given_name,
           email,
           avatar: picture,
         });
-        console.log("User created ===> ", user);
         await done(null, user);
       }
     }

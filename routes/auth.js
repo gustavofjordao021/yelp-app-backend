@@ -179,14 +179,10 @@ router.get(
 router.get(
   "/success/google",
   passport.authenticate("google", {
-    successRedirect: "/app",
+    successRedirect: "/auth/isLoggedIn",
     failureRedirect: "/auth/login",
     failureFlash: "Invalid Google credentials.",
-  }),
-  function (req, res) {
-    res.redirect("/");
-    res.json("Your Google auth worked! :)");
-  }
+  })
 );
 
 module.exports = router;
