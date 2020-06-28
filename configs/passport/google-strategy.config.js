@@ -10,19 +10,19 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3001/auth/success/google",
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       const { provider, given_name, email, picture } = profile;
-      User.findOne({ email: email }).then((user) => {
+      await User.findOne({ email: email }).then(async (user) => {
         if (!user) {
           if (!picture) {
-            const user = User.create({
+            const user = await User.create({
               provider,
               username: given_name,
               email,
             });
             done(null, user);
           } else {
-            const user = User.create({
+            const user = await User.create({
               provider,
               username: given_name,
               email,

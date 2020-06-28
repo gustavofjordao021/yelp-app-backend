@@ -10,19 +10,19 @@ passport.use(
       callbackURL: "http://localhost:3001/auth/success/facebook",
       profileFields: ["email", "name"],
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       const { provider, name, email, picture } = profile;
-      User.findOne({ email: email }).then((user) => {
+      await User.findOne({ email: email }).then(async (user) => {
         if (!user) {
           if (!picture) {
-            const user = User.create({
+            const user = await User.create({
               provider,
               username: name.givenName,
               email,
             });
             done(null, user);
           } else {
-            const user = User.create({
+            const user = await User.create({
               provider,
               username: name.givenName,
               email,

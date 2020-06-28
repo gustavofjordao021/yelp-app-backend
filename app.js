@@ -1,12 +1,12 @@
 require("dotenv").config();
 
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const express = require("express");
-const mongoose = require("mongoose");
-const logger = require("morgan");
 const path = require("path");
 const cors = require("cors");
+const logger = require("morgan");
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const app_name = require("./package.json").name;
 const debug = require("debug")(

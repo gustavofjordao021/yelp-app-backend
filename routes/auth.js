@@ -10,7 +10,6 @@ const saltRounds = 10;
 
 router.post("/signup", (req, res, next) => {
   const { username, email, password, avatar } = req.body;
-  console.log("Body: ", req.body);
   if (!username || !email || !password) {
     res.status(401).json({
       errorMessage:
@@ -34,6 +33,7 @@ router.post("/signup", (req, res, next) => {
     .then((hashedPassword) => {
       if (!avatar) {
         return User.create({
+          provider: "local",
           username,
           email,
           passwordHash: hashedPassword,
@@ -62,6 +62,7 @@ router.post("/signup", (req, res, next) => {
           });
       }
       return User.create({
+        provider: "local",
         username,
         email,
         avatar,
@@ -119,7 +120,6 @@ router.post("/logout", (req, res, next) => {
 });
 
 router.get("/isLoggedIn", (req, res) => {
-  console.log("Req.user ===> ", req.user);
   if (req.user) {
     User.findById(req.user._id)
       .populate("goals")
