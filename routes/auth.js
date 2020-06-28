@@ -119,6 +119,7 @@ router.post("/logout", (req, res, next) => {
 });
 
 router.get("/isLoggedIn", (req, res) => {
+  console.log("Req.user ===> ", req.user);
   if (req.user) {
     User.findById(req.user._id)
       .populate("goals")
@@ -150,19 +151,17 @@ router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
   }
 });
 
-router.get(
-  "/facebook",
-  passport.authenticate("facebook", { scope: "profile" })
-);
+router.get("/facebook", passport.authenticate("facebook"));
 
 router.get(
   "/success/facebook",
   passport.authenticate("facebook", {
-    failureRedirect: "/login",
+    failureRedirect: "/auth/login",
+    failureFlash: "Invalid Facebook credentials.",
+    successRedirect: "http://localhost:3000/signup",
   }),
   (req, res, next) => {
-    res.redirect("/");
-    res.json("Your Facebook auth worked! :)");
+    res.redirect("http://localhost:3000/signup");
   }
 );
 
@@ -179,10 +178,12 @@ router.get(
 router.get(
   "/success/google",
   passport.authenticate("google", {
-    successRedirect: "/auth/isLoggedIn",
     failureRedirect: "/auth/login",
     failureFlash: "Invalid Google credentials.",
-  })
+  }),
+  (req, res, next) => {
+    res.redirect("http://localhost:3000/signup");
+  }
 );
 
 module.exports = router;
