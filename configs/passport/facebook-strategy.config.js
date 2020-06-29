@@ -8,13 +8,14 @@ passport.use(
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: "http://localhost:3001/auth/success/facebook",
-      profileFields: ["email", "name"],
+      profileFields: ["emails", "name", "picture.type(large)"],
     },
     async function (accessToken, refreshToken, profile, done) {
-      const { provider, name, email, picture } = profile;
+      const { email } = profile._json;
+      const { name, photos, provider } = profile;
       await User.findOne({ email: email }).then(async (user) => {
         if (!user) {
-          if (!picture) {
+          if (!photos) {
             const user = await User.create({
               provider,
               username: name.givenName,
@@ -26,7 +27,7 @@ passport.use(
               provider,
               username: name.givenName,
               email,
-              avatar: picture,
+              avatar: photos[0].value,
             });
             done(null, user);
           }

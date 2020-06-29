@@ -54,7 +54,7 @@ router.post("/signup", (req, res, next) => {
             } else if (err.code === 11000) {
               res.json({
                 errorMessage:
-                  "Username and email need to be unique. Either username or email is already used.",
+                  "Email needs to be unique. This e-mail is already in use.",
               });
             } else {
               next(err);
@@ -151,7 +151,10 @@ router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
   }
 });
 
-router.get("/facebook", passport.authenticate("facebook"));
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["email"] })
+);
 
 router.get(
   "/success/facebook",
