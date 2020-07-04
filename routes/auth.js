@@ -143,7 +143,6 @@ router.get("/isLoggedIn", (req, res) => {
 });
 
 router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
-  console.log(req.file);
   if (!req.file) {
     res.status(500).json({ errorMessage: "There's no file to be uploaded!" });
   } else {
