@@ -1,19 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
-const Goal = require("../models/Goal.model");
+const Plant = require("../models/Plant.model");
 const Action = require("../models/Action.model");
 
 const routeGuard = require("../configs/route-guard.config");
 
 // POST Create a goal
-router.post("/create-goal", routeGuard, (req, res, next) => {
-  const { goalName, goalDueDate, goalTarget, goalOwner } = req.body;
+router.post("/create-plant", routeGuard, (req, res, next) => {
+  const { plantName, plantPicture, plantDate, plantOwner } = req.body;
   Goal.create({
-    goalName,
-    goalDueDate,
-    goalTarget,
-    goalOwner,
+    plantName,
+    plantPicture,
+    plantDate,
+    plantOwner,
   })
     .then((newGoal) => {
       User.findByIdAndUpdate(
