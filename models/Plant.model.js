@@ -23,7 +23,7 @@ const goalSchema = new Schema(
         ref: "Action",
       },
     ],
-    plantDate: { type: Date },
+    plantDate: { type: String },
   },
   {
     timestamps: true,
