@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User.model");
 const Plant = require("../models/Plant.model");
 const Action = require("../models/Action.model");
+const uploadCloud = require("../configs/cloudinary-setup");
 
 const routeGuard = require("../configs/route-guard.config");
 
@@ -35,6 +36,18 @@ router.post("/create-plant", routeGuard, (req, res, next) => {
     })
     .catch((errorMessage) => console.log(errorMessage));
 });
+
+router.post(
+  "/plant-image-upload",
+  uploadCloud.single("plantImage"),
+  (req, res) => {
+    if (!req.file) {
+      res.status(500).json({ errorMessage: "There's no file to be uploaded!" });
+    } else {
+      res.status(200).json({ secure_url: req.file.secure_url });
+    }
+  }
+);
 
 // GET Open goal details
 router.get("/all-goals", routeGuard, (req, res, next) => {
