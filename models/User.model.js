@@ -27,6 +27,12 @@ const userSchema = new Schema(
       default:
         "https://cl.goliath.com/image/upload/t_tn,f_auto,q_auto,$h_480,$w_895/go/2020/01/baby-yoda-life-size-figure-584x600-895x480.jpg",
     },
+    collections: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Collections",
+      },
+    ],
     plants: [
       {
         type: Schema.Types.ObjectId,
