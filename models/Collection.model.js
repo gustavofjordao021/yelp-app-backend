@@ -28,4 +28,4 @@ const collectionSchema = new Schema(
   }
 );
 
-module.exports = model("Collections", collectionSchema);
+module.exports = model("Collection", collectionSchema);

@@ -3,9 +3,21 @@ const router = express.Router();
 const User = require("../models/User.model");
 const Plant = require("../models/Plant.model");
 const Action = require("../models/Action.model");
+const Collection = require("../models/Collection.model");
 const uploadCloud = require("../configs/cloudinary-setup");
 
 const routeGuard = require("../configs/route-guard.config");
+
+// GET Open goal details
+router.get("/all-collections", routeGuard, (req, res, next) => {
+  Collection.find()
+    .populate("collectionPlants")
+    .populate("collectionOwner")
+    .then((allCollections) => {
+      res.status(200).json(allCollections);
+    })
+    .catch((err) => res.status(500).json(err));
+});
 
 // POST Create a goal
 router.post("/create-plant", routeGuard, (req, res, next) => {
@@ -37,6 +49,36 @@ router.post("/create-plant", routeGuard, (req, res, next) => {
     .catch((errorMessage) => console.log(errorMessage));
 });
 
+// POST Create a collection
+router.post("/create-collection", routeGuard, (req, res, next) => {
+  const { collectionName, collectionDescription, collectionOwner } = req.body;
+  Collection.create({
+    collectionName,
+    collectionDescription,
+    collectionOwner,
+  })
+    .then((newCollection) => {
+      User.findByIdAndUpdate(
+        newCollection.collectionOwner,
+        { $push: { collections: newCollection._id } },
+        { new: true }
+      )
+        .populate({
+          path: "collections",
+          model: "Collection",
+          populate: {
+            path: "collectionPlants",
+            model: "Plant",
+          },
+        })
+        .then((updatedUser) => {
+          res.status(200).json({ currentUser: updatedUser });
+        });
+    })
+    .catch((errorMessage) => console.log(errorMessage));
+});
+
+// POST Upload plant image
 router.post(
   "/plant-image-upload",
   uploadCloud.single("plantImage"),
@@ -48,17 +90,6 @@ router.post(
     }
   }
 );
-
-// GET Open goal details
-router.get("/all-goals", routeGuard, (req, res, next) => {
-  Goal.find()
-    .populate("goalActions")
-    .populate("goalOwner")
-    .then((allGoals) => {
-      res.status(200).json(allGoals);
-    })
-    .catch((err) => res.status(500).json(err));
-});
 
 // POST Update goal details
 router.post("/:goalId/update", routeGuard, (req, res, next) => {
