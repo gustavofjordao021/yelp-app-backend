@@ -66,10 +66,6 @@ router.post("/create-collection", routeGuard, (req, res, next) => {
         .populate({
           path: "collections",
           model: "Collection",
-          populate: {
-            path: "collectionPlants",
-            model: "Plant",
-          },
         })
         .then((updatedUser) => {
           res.status(200).json({ currentUser: updatedUser });

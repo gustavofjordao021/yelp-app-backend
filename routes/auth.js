@@ -122,6 +122,10 @@ router.post("/logout", (req, res, next) => {
 router.get("/isLoggedIn", (req, res) => {
   if (req.user) {
     User.findById(req.user._id)
+      .populate({
+        path: "collections",
+        model: "Collection",
+      })
       .then((userFound) => {
         userFound.passwordHash = undefined;
         res.json({ user: userFound });
