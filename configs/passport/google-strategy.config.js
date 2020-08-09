@@ -11,13 +11,15 @@ passport.use(
       callbackURL: "http://localhost:3001/auth/success/google",
     },
     async function (accessToken, refreshToken, profile, done) {
-      const { provider, given_name, email, picture } = profile;
+      const { email, picture, provider, given_name, family_name } = profile;
       await User.findOne({ email: email }).then(async (user) => {
         if (!user) {
           if (!picture) {
             const user = await User.create({
               provider,
               username: given_name,
+              firstName: given_name,
+              lastName: family_name,
               email,
             });
             done(null, user);
@@ -25,6 +27,8 @@ passport.use(
             const user = await User.create({
               provider,
               username: given_name,
+              firstName: given_name,
+              lastName: family_name,
               email,
               avatar: picture,
             });

@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
-const User = require("../models/User.model");
 const uploadCloud = require("../configs/cloudinary-setup");
+
+const User = require("../models/User.model");
 
 const bcryptjs = require("bcryptjs");
 const saltRounds = 10;

@@ -19,6 +19,8 @@ passport.use(
             const user = await User.create({
               provider,
               username: name.givenName,
+              firstName: name.givenName,
+              lastName: name.familyName,
               email,
             });
             done(null, user);
@@ -26,6 +28,8 @@ passport.use(
             const user = await User.create({
               provider,
               username: name.givenName,
+              firstName: name.givenName,
+              lastName: name.familyName,
               email,
               avatar: photos[0].value,
             });
