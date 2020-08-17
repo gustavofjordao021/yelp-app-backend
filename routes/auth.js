@@ -1,9 +1,9 @@
 const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const uploadCloud = require("../configs/cloudinary-setup");
 
+const router = express.Router();
 const User = require("../models/User.model");
 
 const bcryptjs = require("bcryptjs");

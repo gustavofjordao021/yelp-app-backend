@@ -3,6 +3,7 @@ require("dotenv").config();
 const path = require("path");
 const cors = require("cors");
 const logger = require("morgan");
+const helmet = require("helmet");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -16,15 +17,17 @@ const debug = require("debug")(
 const app = express();
 
 // Middleware Setup
+app.use(helmet());
 app.use(logger("dev"));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 require("./configs/db.config");
 require("./configs/session.config")(app);
 require("./configs/passport/passport.config.js")(app);
 
+// CORS setup
 app.use(
   cors({
     origin: process.env.REACT_APP_CLIENT_POINT,
