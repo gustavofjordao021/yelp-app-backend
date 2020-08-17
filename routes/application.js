@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
+const axios = require("axios");
 const User = require("../models/User.model");
 const Plant = require("../models/Plant.model");
 const Action = require("../models/Action.model");
+const express = require("express");
 const Collection = require("../models/Collection.model");
+const routeGuard = require("../configs/route-guard.config");
 const uploadCloud = require("../configs/cloudinary-setup");
 
-const routeGuard = require("../configs/route-guard.config");
+const router = express.Router();
 
-// GET Open goal details
+// GET Retrieves all collections and populate them
 router.get("/all-collections", routeGuard, (req, res, next) => {
   Collection.find()
     .populate("collectionPlants")
@@ -19,7 +20,7 @@ router.get("/all-collections", routeGuard, (req, res, next) => {
     .catch((err) => res.status(500).json(err));
 });
 
-// POST Create a goal
+// POST Creates a plant
 router.post("/create-plant", routeGuard, (req, res, next) => {
   const { plantName, plantPicture, plantDate, plantOwner } = req.body;
   Goal.create({
@@ -49,7 +50,7 @@ router.post("/create-plant", routeGuard, (req, res, next) => {
     .catch((errorMessage) => console.log(errorMessage));
 });
 
-// POST Create a collection
+// POST Creates a collection
 router.post("/create-collection", routeGuard, (req, res, next) => {
   const { collectionName, collectionDescription, collectionOwner } = req.body;
   Collection.create({
@@ -86,6 +87,20 @@ router.post(
     }
   }
 );
+
+// GET Fetches user's weather by location
+router.post("/return-weather", (req, res) => {
+  const { lat, lon } = req.body.locationInfo;
+  axios
+    .get(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}`,
+      (req, res)
+    )
+    .then((weatherInfo) => {
+      console.log(weatherInfo);
+    })
+    .catch((err) => console.log("Error while retrieving weather info: ", err));
+});
 
 // POST Update goal details
 router.post("/:goalId/update", routeGuard, (req, res, next) => {
