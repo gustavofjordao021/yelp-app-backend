@@ -93,13 +93,15 @@ router.post("/return-weather", (req, res) => {
   const { lat, lon } = req.body.locationInfo;
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}`,
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}&units=imperial`,
       (req, res)
     )
     .then((weatherInfo) => {
-      console.log(weatherInfo);
+      console.log("Weather ===> ", weatherInfo.data.current);
+      console.log("Icon ===> ", weatherInfo.data.current.weather);
+      res.status(200).json({ weather: weatherInfo.data.current });
     })
-    .catch((err) => console.log("Error while retrieving weather info: ", err));
+    .catch((err) => res.status(500).json(err));
 });
 
 // POST Update goal details
