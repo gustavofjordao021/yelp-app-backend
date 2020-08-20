@@ -8,7 +8,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/auth/success/google",
+      callbackURL: "https://plant-app-test.herokuapp.com/auth/success/google",
     },
     async function (accessToken, refreshToken, profile, done) {
       const { email, picture, provider, given_name, family_name } = profile;

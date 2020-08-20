@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:3001/auth/success/facebook",
+      callbackURL: "https://plant-app-test.herokuapp.com/auth/success/facebook",
       profileFields: ["emails", "name", "picture.type(large)"],
     },
     async function (accessToken, refreshToken, profile, done) {

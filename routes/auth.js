@@ -156,10 +156,10 @@ router.get(
   passport.authenticate("facebook", {
     failureRedirect: "/auth/login",
     failureFlash: "Invalid Facebook credentials.",
-    successRedirect: "http://localhost:3000/signup",
+    successRedirect: "https://plant-app-test.herokuapp.com/signup",
   }),
   (req, res, next) => {
-    res.redirect("http://localhost:3000/signup");
+    res.redirect("https://plant-app-test.herokuapp.com/signup");
   }
 );
 
@@ -180,7 +180,7 @@ router.get(
     failureFlash: "Invalid Google credentials.",
   }),
   (req, res, next) => {
-    res.redirect("http://localhost:3000/signup");
+    res.redirect("https://plant-app-test.herokuapp.com/signup");
   }
 );
 
