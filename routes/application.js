@@ -6,6 +6,7 @@ const express = require("express");
 const Collection = require("../models/Collection.model");
 const routeGuard = require("../configs/route-guard.config");
 const uploadCloud = require("../configs/cloudinary-setup");
+const { response } = require("express");
 
 const router = express.Router();
 
@@ -88,7 +89,7 @@ router.post(
   }
 );
 
-// GET Fetches user's weather by location
+// POST Fetches user's weather by location
 router.post("/return-weather", (req, res) => {
   const { lat, lon } = req.body.locationInfo;
   axios
@@ -97,9 +98,17 @@ router.post("/return-weather", (req, res) => {
       (req, res)
     )
     .then((weatherInfo) => {
-      console.log("Weather ===> ", weatherInfo.data.current);
-      console.log("Icon ===> ", weatherInfo.data.current.weather);
-      res.status(200).json({ weather: weatherInfo.data.current });
+      res.status(200).json({ weather: weatherInfo.data.current.temp });
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
+// GET Fetches user's city by latitude/longitude
+router.post("/return-location", (req, res) => {
+  axios
+    .get(`https://ipinfo.io?token=${process.env.IPINFO_API_KEY}`, (req, res))
+    .then((locationInfo) => {
+      res.status(200).json({ location: locationInfo.data.city });
     })
     .catch((err) => res.status(500).json(err));
 });
