@@ -1,5 +1,5 @@
-const axios = require("axios");
 const User = require("../models/User.model");
+const axios = require("axios");
 const Plant = require("../models/Plant.model");
 const Action = require("../models/Action.model");
 const express = require("express");

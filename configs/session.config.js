@@ -6,7 +6,12 @@ module.exports = (app) => {
   app.use(
     session({
       secret: process.env.SESS_SECRET,
-      cookie: { maxAge: 600000 * 1000, path: "/" },
+      cookie: {
+        maxAge: 600000 * 1000,
+        path: "/",
+        sameSite: "none",
+        secure: true,
+      },
       name: "sessionID",
       resave: false,
       saveUninitialized: false,
