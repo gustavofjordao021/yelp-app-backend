@@ -15,16 +15,6 @@ const debug = require("debug")(
 
 const app = express();
 
-// Middleware Setup
-app.use(helmet());
-app.use(logger("dev"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-require("./configs/db.config");
-require("./configs/session.config")(app);
-require("./configs/passport/passport.config.js")(app);
-
 // CORS setup
 // app.use(cors());
 
@@ -49,6 +39,16 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+// Middleware Setup
+app.use(helmet());
+app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+require("./configs/db.config");
+require("./configs/session.config")(app);
+require("./configs/passport/passport.config.js")(app);
 
 // Route setup
 app.use("/", require("./routes/index"));
