@@ -18,27 +18,27 @@ const app = express();
 // CORS setup
 // app.use(cors());
 
-app.use(
-  cors({
-    origin: process.env.REACT_APP_CLIENT_POINT,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.REACT_APP_CLIENT_POINT,
+//     credentials: true,
+//   })
+// );
 
 // Setting up headers in case CORS fails
-// app.use(function (req, res, next) {
-//   res.header(
-//     "Access-Control-Allow-Origin",
-//     `${process.env.REACT_APP_CLIENT_POINT}`
-//   );
-//   res.header("Access-Control-Allow-Credentials", true);
-//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
-//   );
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header(
+    "Access-Control-Allow-Origin",
+    `${process.env.REACT_APP_CLIENT_POINT}`
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+  );
+  next();
+});
 
 // Middleware Setup
 app.use(helmet());
