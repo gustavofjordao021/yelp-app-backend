@@ -28,12 +28,14 @@ require("./configs/session.config")(app);
 require("./configs/passport/passport.config.js")(app);
 
 // CORS setup
-app.use(
-  cors({
-    origin: process.env.REACT_APP_CLIENT_POINT,
-    credentials: true,
-  })
-);
+app.use(cors());
+
+// app.use(
+//   cors({
+//     origin: process.env.REACT_APP_CLIENT_POINT,
+//     credentials: true,
+//   })
+// );
 
 // Setting up headers in case CORS fails
 app.use(function (req, res, next) {
