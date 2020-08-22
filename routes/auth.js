@@ -156,10 +156,10 @@ router.get(
   passport.authenticate("facebook", {
     failureRedirect: "/auth/login",
     failureFlash: "Invalid Facebook credentials.",
-    successRedirect: "https://plant-app-test.herokuapp.com/signup",
+    successRedirect: `${process.env.REACT_APP_CLIENT_POINT}/signup`,
   }),
   (req, res, next) => {
-    res.redirect("https://plant-app-test.herokuapp.com/signup");
+    res.redirect(`${process.env.REACT_APP_CLIENT_POINT}/signup`);
   }
 );
 
@@ -180,7 +180,7 @@ router.get(
     failureFlash: "Invalid Google credentials.",
   }),
   (req, res, next) => {
-    res.redirect("https://plant-app-test.herokuapp.com/signup");
+    res.redirect(`${process.env.REACT_APP_CLIENT_POINT}/signup`);
   }
 );
 
