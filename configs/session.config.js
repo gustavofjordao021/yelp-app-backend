@@ -10,6 +10,7 @@ module.exports = (app) => {
         maxAge: 600000 * 1000,
         path: "/",
         sameSite: "lax",
+        secure: true,
       },
       name: "sessionID",
       resave: false,
