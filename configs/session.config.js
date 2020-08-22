@@ -9,8 +9,7 @@ module.exports = (app) => {
       cookie: {
         maxAge: 600000 * 1000,
         path: "/",
-        sameSite: "none",
-        secure: true,
+        sameSite: "lax",
       },
       name: "sessionID",
       resave: false,
