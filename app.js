@@ -28,7 +28,7 @@ require("./configs/session.config")(app);
 require("./configs/passport/passport.config.js")(app);
 
 // CORS setup
-app.use(cors());
+// app.use(cors());
 
 // app.use(
 //   cors({
