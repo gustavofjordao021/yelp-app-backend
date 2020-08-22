@@ -16,29 +16,32 @@ const debug = require("debug")(
 const app = express();
 
 // CORS setup
-// app.use(cors());
-
-// app.use(
-//   cors({
-//     origin: process.env.REACT_APP_CLIENT_POINT,
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    credentials: true,
+    preflightContinue: true,
+    optionsSuccessStatus: 204,
+    origin: process.env.REACT_APP_CLIENT_POINT,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Range", "X-Content-Range"],
+    methods: ["GET", "POST", "PUT", "HEAD", "PATCH", "DELETE"],
+  })
+);
 
 // Setting up headers in case CORS fails
-app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    `${process.env.REACT_APP_CLIENT_POINT}`
-  );
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
-  );
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     `${process.env.REACT_APP_CLIENT_POINT}`
+//   );
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+//   );
+//   next();
+// });
 
 // Middleware Setup
 app.use(helmet());
