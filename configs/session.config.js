@@ -9,7 +9,7 @@ module.exports = (app) => {
       cookie: {
         maxAge: 600000 * 1000,
         path: "/",
-        domain: "https://plant-app-test.herokuapp.com/",
+        domain: "https://plant-app-test.netlify.app/",
         sameSite: "none",
         secure: true,
       },
