@@ -16,7 +16,7 @@ const debug = require("debug")(
 
 const app = express();
 
-CORS setup
+// CORS setup
 app.use(
   cors({
     credentials: true,
