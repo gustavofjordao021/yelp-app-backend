@@ -10,7 +10,8 @@ module.exports = (app) => {
         maxAge: 600000 * 1000,
         path: "/",
         domain: "https://plant-app-test.netlify.app/",
-        sameSite: "lax",
+        sameSite: "none",
+        secure: true,
       },
       name: "sessionID",
       resave: false,
@@ -20,10 +21,5 @@ module.exports = (app) => {
         ttl: 60 * 60 * 24 * 1000,
       }),
     })
-  );
-
-  if (process.env.NODE_ENV === "production") {
-    app.set("trust proxy", 1); // trust first proxy
-    sessionConfig.cookie.secure = true; // serve secure cookies
-  }
+  );}
 };
