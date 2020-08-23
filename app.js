@@ -18,6 +18,7 @@ const app = express();
 
 // CORS setup
 app.use(
+  console.log("Origin =====> ", process.env.REACT_APP_CLIENT_POINT),
   cors({
     credentials: true,
     preflightContinue: true,

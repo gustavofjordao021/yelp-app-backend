@@ -121,25 +121,36 @@ router.post("/logout", (req, res, next) => {
   res.status(200).json({ message: "Logout successful!" });
 });
 
-router.get("/isLoggedIn", cors(), (req, res) => {
-  console.log("Cookie ===> ", req.cookies);
-  console.log("Cookie ===> ", req.signedCookies);
-  if (req.user) {
-    User.findById(req.user._id)
-      .populate({
-        path: "collections",
-        model: "Collection",
-      })
-      .then((userFound) => {
-        userFound.passwordHash = undefined;
-        res.json({ user: userFound });
-        return;
-      })
-      .catch((err) => res.json({ errorMessage: "Unauthorized access!" }));
-  } else {
-    res.status(403).json({ errorMessage: "Unauthorized access!" });
+router.get(
+  "/isLoggedIn",
+  cors({
+    credentials: true,
+    preflightContinue: true,
+    optionsSuccessStatus: 200,
+    origin: process.env.REACT_APP_CLIENT_POINT,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "HEAD", "PATCH", "DELETE"],
+  }),
+  (req, res) => {
+    console.log("Cookie ===> ", req.cookies);
+    console.log("Cookie ===> ", req.signedCookies);
+    if (req.user) {
+      User.findById(req.user._id)
+        .populate({
+          path: "collections",
+          model: "Collection",
+        })
+        .then((userFound) => {
+          userFound.passwordHash = undefined;
+          res.json({ user: userFound });
+          return;
+        })
+        .catch((err) => res.json({ errorMessage: "Unauthorized access!" }));
+    } else {
+      res.status(403).json({ errorMessage: "Unauthorized access!" });
+    }
   }
-});
+);
 
 router.post("/avatar-upload", uploadCloud.single("avatar"), (req, res) => {
   if (!req.file) {
