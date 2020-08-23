@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -120,7 +121,7 @@ router.post("/logout", (req, res, next) => {
   res.status(200).json({ message: "Logout successful!" });
 });
 
-router.get("/isLoggedIn", (req, res) => {
+router.get("/isLoggedIn", cors(), (req, res) => {
   console.log("Cookie ===> ", req.cookies);
   console.log("Cookie ===> ", req.signedCookies);
   if (req.user) {
