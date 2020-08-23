@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const app_name = require("./package.json").name;
 const debug = require("debug")(
@@ -46,6 +47,7 @@ app.use(
 // Middleware Setup
 app.use(helmet());
 app.use(logger("dev"));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

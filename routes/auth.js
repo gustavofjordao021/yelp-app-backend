@@ -121,6 +121,8 @@ router.post("/logout", (req, res, next) => {
 });
 
 router.get("/isLoggedIn", (req, res) => {
+  console.log("Cookie ===> ", req.cookies);
+  console.log("Cookie ===> ", req.signedCookies);
   if (req.user) {
     User.findById(req.user._id)
       .populate({
