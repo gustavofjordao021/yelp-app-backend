@@ -98,7 +98,7 @@ router.post("/return-weather", (req, res) => {
       (req, res)
     )
     .then((weatherInfo) => {
-      res.status(200).json({ weather: weatherInfo.data.current.temp });
+      res.status(200).json(weatherInfo.data.current.temp);
     })
     .catch((err) => res.status(500).json(err));
 });
