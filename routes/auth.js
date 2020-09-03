@@ -160,7 +160,7 @@ router.get(
     successRedirect: `${process.env.REACT_APP_CLIENT_POINT}/signup`,
   }),
   (req, res, next) => {
-    res.redirect(`${process.env.REACT_APP_CLIENT_POINT}/signup`);
+    res.redirect(`${process.env.REACT_APP_CLIENT_POINT}`);
   }
 );
 
@@ -181,7 +181,7 @@ router.get(
     failureFlash: "Invalid Google credentials.",
   }),
   (req, res, next) => {
-    res.redirect(`${process.env.REACT_APP_CLIENT_POINT}/signup`);
+    res.redirect(`${process.env.REACT_APP_CLIENT_POINT}`);
   }
 );
 
