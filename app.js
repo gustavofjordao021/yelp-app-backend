@@ -3,7 +3,7 @@ require("dotenv").config();
 const path = require("path");
 const cors = require("cors");
 const logger = require("morgan");
-// const helmet = require("helmet");
+const helmet = require("helmet");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
 });
 
 // Middleware Setup
-// app.use(helmet());
+app.use(helmet());
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(bodyParser.json());
