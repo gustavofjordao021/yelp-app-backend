@@ -30,7 +30,6 @@ app.use(
 
 // Setting up headers in case CORS fails
 // app.use(function (req, res, next) {
-//   console.log("Origin =====> ", process.env.REACT_APP_CLIENT_POINT);
 //   res.header(
 //     "Access-Control-Allow-Origin",
 //     `${process.env.REACT_APP_CLIENT_POINT}`
