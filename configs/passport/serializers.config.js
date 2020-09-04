@@ -6,9 +6,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(async function (id, done) {
-  console.log("Id ====> ", id);
   await User.findById(id, function (err, user) {
-    console.log("Deserialized user ====> ", user);
     if (!err) done(null, user);
     else done(err, null);
   });

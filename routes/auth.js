@@ -122,8 +122,6 @@ router.post("/logout", (req, res, next) => {
 });
 
 router.get("/isLoggedIn", (req, res) => {
-  console.log("Req.session ===> ", req.session);
-  console.log("Req.user ===> ", req.user);
   if (req.user) {
     User.findById(req.user._id)
       .populate({
