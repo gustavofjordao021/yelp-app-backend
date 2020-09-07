@@ -8,6 +8,10 @@ module.exports = (app) => {
     session({
       secret: process.env.SESS_SECRET,
       name: "sessionID",
+      cookie: {
+        sameSite: "none",
+        secure: true,
+      },
       resave: false,
       saveUninitialized: false,
       store: new MongoStore({
