@@ -76,6 +76,23 @@ router.post("/create-collection", routeGuard, (req, res, next) => {
     .catch((errorMessage) => console.log(errorMessage));
 });
 
+// POST Delete a collection
+router.post("/:collectionId/delete", routeGuard, (req, res, next) => {
+  Collection.findByIdAndDelete(req.params.collectionId)
+    .then(() => {
+      User.findByIdAndUpdate(
+        req.user._id,
+        { $pull: { collections: req.params.collectionId } },
+        { new: true }
+      )
+        .then((updatedUser) => {
+          res.status(200).json({ currentUser: updatedUser });
+        })
+        .catch((err) => res.status(500).json(err));
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
 // POST Upload plant image
 router.post(
   "/plant-image-upload",
@@ -229,6 +246,7 @@ router.post("/:goalId/:actionId/update", routeGuard, (req, res, next) => {
     .catch((err) => console.log("Error 2: ", err));
 });
 
+// POST Check actions as done
 router.post("/:goalId/:actionId/is-done", routeGuard, (req, res, next) => {
   Action.findByIdAndUpdate(
     req.params.actionId,
@@ -252,6 +270,7 @@ router.post("/:goalId/:actionId/is-done", routeGuard, (req, res, next) => {
     .catch((err) => console.log("Error 1: ", err));
 });
 
+// POST Check actions as not done
 router.post("/:goalId/:actionId/not-done", routeGuard, (req, res, next) => {
   Action.findByIdAndUpdate(
     req.params.actionId,
