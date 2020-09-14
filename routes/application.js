@@ -11,8 +11,10 @@ const { response } = require("express");
 const router = express.Router();
 
 // GET Retrieves all collections and populate them
-router.get("/all-collections", routeGuard, (req, res, next) => {
-  Collection.find()
+router.get("/:collectionId", routeGuard, (req, res, next) => {
+  const { collectionId } = req.params;
+  console.log(collectionId);
+  Collection.findById(collectionId)
     .populate("collectionPlants")
     .populate("collectionOwner")
     .then((allCollections) => {
