@@ -19,7 +19,7 @@ const collectionSchema = new Schema(
     collectionPlants: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Plants",
+        ref: "Plant",
       },
     ],
   },

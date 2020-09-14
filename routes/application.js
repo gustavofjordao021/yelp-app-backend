@@ -11,9 +11,8 @@ const { response } = require("express");
 const router = express.Router();
 
 // GET Retrieves all collections and populate them
-router.get("/:collectionId", routeGuard, (req, res, next) => {
+router.get("/collections/:collectionId", routeGuard, (req, res) => {
   const { collectionId } = req.params;
-  console.log(collectionId);
   Collection.findById(collectionId)
     .populate("collectionPlants")
     .populate("collectionOwner")
@@ -24,7 +23,7 @@ router.get("/:collectionId", routeGuard, (req, res, next) => {
 });
 
 // POST Creates a plant
-router.post("/create-plant", routeGuard, (req, res, next) => {
+router.post("/create-plant", routeGuard, (req, res) => {
   const { plantName, plantPicture, plantDate, plantOwner } = req.body;
   Goal.create({
     plantName,
@@ -54,7 +53,7 @@ router.post("/create-plant", routeGuard, (req, res, next) => {
 });
 
 // POST Creates a collection
-router.post("/create-collection", routeGuard, (req, res, next) => {
+router.post("/create-collection", routeGuard, (req, res) => {
   const { collectionName, collectionDescription, collectionOwner } = req.body;
   Collection.create({
     collectionName,
@@ -79,7 +78,7 @@ router.post("/create-collection", routeGuard, (req, res, next) => {
 });
 
 // POST Delete a collection
-router.post("/:collectionId/delete", routeGuard, (req, res, next) => {
+router.post("/:collectionId/delete", routeGuard, (req, res) => {
   Collection.findByIdAndDelete(req.params.collectionId)
     .then(() => {
       User.findByIdAndUpdate(
@@ -133,7 +132,7 @@ router.post("/return-location", (req, res) => {
 });
 
 // POST Update goal details
-router.post("/:goalId/update", routeGuard, (req, res, next) => {
+router.post("/:goalId/update", routeGuard, (req, res) => {
   const { goalName, goalDueDate, goalTarget } = req.body;
   Goal.findByIdAndUpdate(
     req.params.goalId,
@@ -164,7 +163,7 @@ router.post("/:goalId/update", routeGuard, (req, res, next) => {
 });
 
 // POST Delete goal
-router.post("/:goalId/delete", routeGuard, (req, res, next) => {
+router.post("/:goalId/delete", routeGuard, (req, res) => {
   Goal.findByIdAndDelete(req.params.goalId)
     .then(() => {
       User.findByIdAndUpdate(
@@ -181,7 +180,7 @@ router.post("/:goalId/delete", routeGuard, (req, res, next) => {
 });
 
 // POST Create an action
-router.post("/:goalId/new-action", routeGuard, (req, res, next) => {
+router.post("/:goalId/new-action", routeGuard, (req, res) => {
   const { actionName, actionDescription, actionOwner } = req.body.actionData;
   Action.create({
     actionName,
@@ -215,7 +214,7 @@ router.post("/:goalId/new-action", routeGuard, (req, res, next) => {
 });
 
 // POST Update an action
-router.post("/:goalId/:actionId/update", routeGuard, (req, res, next) => {
+router.post("/:goalId/:actionId/update", routeGuard, (req, res) => {
   const { actionName, actionDescription, actionOwner, actionId } = req.body;
   Action.findByIdAndUpdate(
     actionId,
@@ -249,7 +248,7 @@ router.post("/:goalId/:actionId/update", routeGuard, (req, res, next) => {
 });
 
 // POST Check actions as done
-router.post("/:goalId/:actionId/is-done", routeGuard, (req, res, next) => {
+router.post("/:goalId/:actionId/is-done", routeGuard, (req, res) => {
   Action.findByIdAndUpdate(
     req.params.actionId,
     { isDone: "true" },
@@ -273,7 +272,7 @@ router.post("/:goalId/:actionId/is-done", routeGuard, (req, res, next) => {
 });
 
 // POST Check actions as not done
-router.post("/:goalId/:actionId/not-done", routeGuard, (req, res, next) => {
+router.post("/:goalId/:actionId/not-done", routeGuard, (req, res) => {
   Action.findByIdAndUpdate(
     req.params.actionId,
     { isDone: "false" },
@@ -297,7 +296,7 @@ router.post("/:goalId/:actionId/not-done", routeGuard, (req, res, next) => {
 });
 
 // POST Delete an action
-router.post("/:goalId/:actionId/delete", routeGuard, (req, res, next) => {
+router.post("/:goalId/:actionId/delete", routeGuard, (req, res) => {
   Action.findByIdAndDelete(req.params.actionId).then((actionDeleted) => {
     Goal.findByIdAndUpdate(
       req.params.goalId,
