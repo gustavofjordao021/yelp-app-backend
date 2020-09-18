@@ -157,7 +157,7 @@ router.get(
   passport.authenticate("facebook", {
     failureRedirect: "/auth/login",
     failureFlash: "Invalid Facebook credentials.",
-    successRedirect: `${process.env.REACT_APP_CLIENT_POINT}/signup`,
+    successRedirect: `${process.env.REACT_APP_CLIENT_POINT}`,
   }),
   (req, res, next) => {
     res.redirect(`${process.env.REACT_APP_CLIENT_POINT}`);
