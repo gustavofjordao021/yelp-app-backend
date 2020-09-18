@@ -121,7 +121,7 @@ router.post("/logout", (req, res, next) => {
   res.status(200).json({ message: "Logout successful!" });
 });
 
-router.get("/isLoggedIn", (req, res) => {
+router.get("/isLoggedIn/", (req, res) => {
   if (req.user) {
     User.findById(req.user._id)
       .populate({
