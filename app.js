@@ -5,7 +5,6 @@ const cors = require("cors");
 const logger = require("morgan");
 const helmet = require("helmet");
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
@@ -50,8 +49,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require("./configs/db.config");
-require("./configs/session.config")(app);
+require("./configs/db.config.js");
+require("./configs/session.config.js")(app);
 require("./configs/passport/passport.config.js")(app);
 
 // Route setup

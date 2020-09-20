@@ -3,14 +3,12 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 
 module.exports = (app) => {
+  app.set("trust proxy", true);
   app.use(
     session({
       secret: process.env.SESS_SECRET,
       name: "sessionID",
-      cookie: {
-        sameSite: "none",
-        secure: true,
-      },
+      proxy: true,
       resave: false,
       saveUninitialized: false,
       store: new MongoStore({
