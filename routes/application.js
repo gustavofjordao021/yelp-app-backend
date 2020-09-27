@@ -24,30 +24,34 @@ router.get("/collections/:collectionId", routeGuard, (req, res) => {
 
 // POST Creates a plant
 router.post("/create-plant", routeGuard, (req, res) => {
-  const { plantName, plantPicture, plantDate, plantOwner } = req.body;
-  Goal.create({
-    plantName,
-    plantPicture,
+  const {
     plantDate,
+    plantName,
     plantOwner,
+    collectionId,
+    plantPicture,
+  } = req.body;
+  Plant.create({
+    plantDate,
+    plantName,
+    plantOwner,
+    plantPicture,
   })
-    .then((newGoal) => {
-      User.findByIdAndUpdate(
-        newGoal.goalOwner,
-        { $push: { goals: newGoal._id } },
+    .then((newPlant) => {
+      Collection.findByIdAndUpdate(
+        collectionId,
+        { $push: { collectionPlants: newPlant._id } },
         { new: true }
-      )
-        .populate({
-          path: "goals",
-          model: "Goal",
-          populate: {
-            path: "goalActions",
-            model: "Action",
-          },
-        })
-        .then((updatedUser) => {
-          res.status(200).json({ currentUser: updatedUser });
-        });
+      ).then(() => {
+        User.findById(plantOwner)
+          .populate({
+            path: "collections",
+            model: "Collection",
+          })
+          .then((updatedUser) => {
+            res.status(200).json({ currentUser: updatedUser });
+          });
+      });
     })
     .catch((errorMessage) => console.log(errorMessage));
 });

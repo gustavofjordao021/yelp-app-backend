@@ -129,9 +129,6 @@ router.get("/isLoggedIn", (req, res) => {
         model: "Collection",
       })
       .then((userFound) => {
-        console.log("User ===> ", req.user);
-        console.log("Session ===> ", req.session);
-        console.log("Cookie ===> ", req.session.cookie);
         userFound.passwordHash = undefined;
         res.json({ user: userFound });
         return;
