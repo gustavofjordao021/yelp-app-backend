@@ -23,6 +23,12 @@ const goalSchema = new Schema(
         ref: "Action",
       },
     ],
+    plantCollection: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Collection",
+      },
+    ],
     plantDate: { type: String },
   },
   {

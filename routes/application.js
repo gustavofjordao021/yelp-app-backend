@@ -28,30 +28,38 @@ router.post("/create-plant", routeGuard, (req, res) => {
     plantDate,
     plantName,
     plantOwner,
-    collectionId,
     plantPicture,
+    plantCollection,
   } = req.body;
   Plant.create({
     plantDate,
     plantName,
     plantOwner,
     plantPicture,
+    plantCollection,
   })
     .then((newPlant) => {
       Collection.findByIdAndUpdate(
-        collectionId,
+        plantCollection,
         { $push: { collectionPlants: newPlant._id } },
         { new: true }
-      ).then(() => {
-        User.findById(plantOwner)
-          .populate({
-            path: "collections",
-            model: "Collection",
-          })
-          .then((updatedUser) => {
-            res.status(200).json({ currentUser: updatedUser });
-          });
-      });
+      )
+        .populate({
+          path: "collectionPlants",
+          model: "Plant",
+        })
+        .then((collection) => {
+          User.findById(plantOwner)
+            .populate({
+              path: "collections",
+              model: "Collection",
+            })
+            .then((updatedUser) => {
+              res.status(200).json({ currentUser: updatedUser });
+            })
+            .catch((errorMessage) => console.log(errorMessage));
+        })
+        .catch((errorMessage) => console.log(errorMessage));
     })
     .catch((errorMessage) => console.log(errorMessage));
 });
